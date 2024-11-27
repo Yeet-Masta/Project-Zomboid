@@ -11071,12 +11071,10 @@ public abstract class IsoGameCharacter extends IsoMovingObject implements Talker
       } else if (var1.isNetPlayerAuthorization(BaseVehicle.Authorization.Server)) {
          return false;
       } else if (var1.isEngineRunning() || var1.getVehicleTowing() != null && var1.getVehicleTowing().isEngineRunning() || var1.getVehicleTowedBy() != null && var1.getVehicleTowedBy().isEngineRunning()) {
-         if (var1.getDriver() != null || var1.getVehicleTowing() != null && var1.getVehicleTowing().getDriver() != null || var1.getVehicleTowedBy() != null && var1.getVehicleTowedBy().getDriver() != null) {
-            if (!(Math.abs(var1.x - this.x) < 0.01F) && !(Math.abs(var1.y - this.y) < 0.01F)) {
-               return (!this.isKnockedDown() || this.isOnFloor()) && (this.getHitReactionNetworkAI() == null || !this.getHitReactionNetworkAI().isStarted());
-            } else {
-               return false;
-            }
+         if (var1.getDriver() == null && (var1.getVehicleTowing() == null || var1.getVehicleTowing().getDriver() == null) && (var1.getVehicleTowedBy() == null || var1.getVehicleTowedBy().getDriver() == null)) {
+            return false;
+         } else if (!(Math.abs(var1.x - this.x) < 0.01F) && !(Math.abs(var1.y - this.y) < 0.01F)) {
+            return (!this.isKnockedDown() || this.isOnFloor()) && (this.getHitReactionNetworkAI() == null || !this.getHitReactionNetworkAI().isStarted());
          } else {
             return false;
          }

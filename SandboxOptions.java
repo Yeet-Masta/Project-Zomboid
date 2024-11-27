@@ -827,38 +827,38 @@ public final class SandboxOptions {
 
          LuaManager.env.rawset("SandboxVars", (Object)null);
 
-         boolean var7;
+         boolean var17;
          try {
             LuaManager.loaded.remove(var2.getAbsolutePath().replace("\\", "/"));
             Object var5 = LuaManager.RunLua(var2.getAbsolutePath());
             Object var16 = LuaManager.env.rawget("SandboxVars");
-            if (var16 != null) {
-               if (var16 instanceof KahluaTable) {
-                  KahluaTable var17 = (KahluaTable)var16;
-                  int var8 = 0;
-                  Object var9 = var17.rawget("VERSION");
-                  if (var9 != null) {
-                     if (var9 instanceof Double) {
-                        var8 = ((Double)var9).intValue();
-                     } else {
-                        DebugLog.log("ERROR: VERSION=\"" + var9 + "\" in " + var1);
-                     }
-
-                     var17.rawset("VERSION", (Object)null);
-                  }
-
-                  var17 = this.upgradeLuaTable("", var17, var8);
-
-                  for(int var10 = 0; var10 < this.options.size(); ++var10) {
-                     ((SandboxOption)this.options.get(var10)).fromTable(var17);
-                  }
-               }
-
-               var7 = true;
-               return var7;
+            if (var16 == null) {
+               var17 = false;
+               return var17;
             }
 
-            var7 = false;
+            if (var16 instanceof KahluaTable) {
+               KahluaTable var7 = (KahluaTable)var16;
+               int var8 = 0;
+               Object var9 = var7.rawget("VERSION");
+               if (var9 != null) {
+                  if (var9 instanceof Double) {
+                     var8 = ((Double)var9).intValue();
+                  } else {
+                     DebugLog.log("ERROR: VERSION=\"" + var9 + "\" in " + var1);
+                  }
+
+                  var7.rawset("VERSION", (Object)null);
+               }
+
+               var7 = this.upgradeLuaTable("", var7, var8);
+
+               for(int var10 = 0; var10 < this.options.size(); ++var10) {
+                  ((SandboxOption)this.options.get(var10)).fromTable(var7);
+               }
+            }
+
+            var17 = true;
          } catch (Exception var14) {
             ExceptionLogger.logException(var14);
             boolean var6 = false;
@@ -870,7 +870,7 @@ public final class SandboxOptions {
 
          }
 
-         return var7;
+         return var17;
       }
    }
 

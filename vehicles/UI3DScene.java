@@ -1556,13 +1556,13 @@ public final class UI3DScene extends UIElement {
          }
 
          float var7 = var6 / var5;
-         if (var7 < 0.0F || var7 > 1.0F) {
-            var8 = 0;
+         if (!(var7 < 0.0F) && !(var7 > 1.0F)) {
+            var2.set(var1.origin).add(var3.mul(var7));
+            var8 = 1;
             return var8;
          }
 
-         var2.set(var1.origin).add(var3.mul(var7));
-         var8 = 1;
+         var8 = 0;
       } finally {
          releaseVector3f(var3);
          releaseVector3f(var4);

@@ -97,7 +97,6 @@ public final class CompressIdenticalItems {
       var2.id = 0;
 
       while(true) {
-         boolean var11;
          try {
             var5 = var0.itemCompareBuffer;
             var5.position(0);
@@ -107,18 +106,17 @@ public final class CompressIdenticalItems {
             int var9 = var5.position();
             var2.save(var5, false);
             int var10 = var5.position();
-            if (var10 - var9 == var7 - var8) {
-               for(int var20 = 0; var20 < var7 - var8; ++var20) {
-                  if (var5.get(var8 + var20) != var5.get(var9 + var20)) {
-                     boolean var12 = false;
-                     return var12;
-                  }
-               }
-
-               return true;
+            if (var10 - var9 != var7 - var8) {
+               boolean var20 = false;
+               return var20;
             }
 
-            var11 = false;
+            for(int var11 = 0; var11 < var7 - var8; ++var11) {
+               if (var5.get(var8 + var11) != var5.get(var9 + var11)) {
+                  boolean var12 = false;
+                  return var12;
+               }
+            }
          } catch (BufferOverflowException var16) {
             var5 = ensureCapacity(var5);
             var5.clear();
@@ -129,7 +127,7 @@ public final class CompressIdenticalItems {
             var2.id = var6;
          }
 
-         return var11;
+         return true;
       }
    }
 

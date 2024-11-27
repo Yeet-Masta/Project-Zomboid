@@ -274,8 +274,8 @@ public final class PlayerDBHelper {
                               if (var9 != null) {
                                  try {
                                     var9.close();
-                                 } catch (Throwable var13) {
-                                    var20.addSuppressed(var13);
+                                 } catch (Throwable var15) {
+                                    var20.addSuppressed(var15);
                                  }
                               }
 
@@ -298,16 +298,16 @@ public final class PlayerDBHelper {
                                  var9.setInt(1, var7 + 1);
                                  var9.setInt(2, 1);
                                  var9.executeUpdate();
-                              } catch (Throwable var18) {
+                              } catch (Throwable var19) {
                                  if (var9 != null) {
                                     try {
                                        var9.close();
-                                    } catch (Throwable var14) {
-                                       var18.addSuppressed(var14);
+                                    } catch (Throwable var16) {
+                                       var19.addSuppressed(var16);
                                     }
                                  }
 
-                                 throw var18;
+                                 throw var19;
                               }
 
                               if (var9 != null) {
@@ -334,16 +334,16 @@ public final class PlayerDBHelper {
                                  var9.setInt(1, var1);
                                  var9.setInt(2, var7 + 1);
                                  var9.executeUpdate();
-                              } catch (Throwable var17) {
+                              } catch (Throwable var18) {
                                  if (var9 != null) {
                                     try {
                                        var9.close();
-                                    } catch (Throwable var15) {
-                                       var17.addSuppressed(var15);
+                                    } catch (Throwable var14) {
+                                       var18.addSuppressed(var14);
                                     }
                                  }
 
-                                 throw var17;
+                                 throw var18;
                               }
 
                               if (var9 != null) {
@@ -357,16 +357,16 @@ public final class PlayerDBHelper {
                                  var9.setInt(1, 1);
                                  var9.setInt(2, var1);
                                  var9.executeUpdate();
-                              } catch (Throwable var19) {
+                              } catch (Throwable var17) {
                                  if (var9 != null) {
                                     try {
                                        var9.close();
-                                    } catch (Throwable var16) {
-                                       var19.addSuppressed(var16);
+                                    } catch (Throwable var13) {
+                                       var17.addSuppressed(var13);
                                     }
                                  }
 
-                                 throw var19;
+                                 throw var17;
                               }
 
                               if (var9 != null) {

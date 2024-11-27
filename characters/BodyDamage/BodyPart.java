@@ -222,34 +222,77 @@ public final class BodyPart {
          }
       }
 
-      if (!this.isInfectedWound() && !this.IsInfected && (!this.alcoholicBandage || !(this.getBandageLife() > 0.0F)) && (this.getDeepWoundTime() > 0.0F || this.getScratchTime() > 0.0F || this.getCutTime() > 0.0F || this.getStitchTime() > 0.0F)) {
-         int var4 = 40000;
+      if (this.isInfectedWound() || this.IsInfected || this.alcoholicBandage && this.getBandageLife() > 0.0F || !(this.getDeepWoundTime() > 0.0F) && !(this.getScratchTime() > 0.0F) && !(this.getCutTime() > 0.0F) && !(this.getStitchTime() > 0.0F)) {
+         if (this.isInfectedWound()) {
+            boolean var4 = false;
+            if (this.getAlcoholLevel() > 0.0F) {
+               this.setAlcoholLevel(this.getAlcoholLevel() - 2.0E-4F * GameTime.getInstance().getMultiplier());
+               this.setWoundInfectionLevel(this.getWoundInfectionLevel() - 2.0E-4F * GameTime.getInstance().getMultiplier());
+               if (this.getAlcoholLevel() < 0.0F) {
+                  this.setAlcoholLevel(0.0F);
+               }
+
+               var4 = true;
+            }
+
+            if (this.ParentChar.getReduceInfectionPower() > 0.0F) {
+               this.setWoundInfectionLevel(this.getWoundInfectionLevel() - 2.0E-4F * GameTime.getInstance().getMultiplier());
+               this.ParentChar.setReduceInfectionPower(this.ParentChar.getReduceInfectionPower() - 2.0E-4F * GameTime.getInstance().getMultiplier());
+               if (this.ParentChar.getReduceInfectionPower() < 0.0F) {
+                  this.ParentChar.setReduceInfectionPower(0.0F);
+               }
+
+               var4 = true;
+            }
+
+            if (this.getGarlicFactor() > 0.0F) {
+               this.setWoundInfectionLevel(this.getWoundInfectionLevel() - 2.0E-4F * GameTime.getInstance().getMultiplier());
+               this.setGarlicFactor(this.getGarlicFactor() - 8.0E-4F * GameTime.getInstance().getMultiplier());
+               var4 = true;
+            }
+
+            if (!var4) {
+               if (this.IsInfected) {
+                  this.setWoundInfectionLevel(this.getWoundInfectionLevel() + 2.0E-4F * GameTime.getInstance().getMultiplier());
+               } else if (this.haveGlass()) {
+                  this.setWoundInfectionLevel(this.getWoundInfectionLevel() + 1.0E-4F * GameTime.getInstance().getMultiplier());
+               } else {
+                  this.setWoundInfectionLevel(this.getWoundInfectionLevel() + 1.0E-5F * GameTime.getInstance().getMultiplier());
+               }
+
+               if (this.getWoundInfectionLevel() > 10.0F) {
+                  this.setWoundInfectionLevel(10.0F);
+               }
+            }
+         }
+      } else {
+         int var3 = 40000;
          if (!this.bandaged()) {
-            var4 -= 10000;
+            var3 -= 10000;
          } else if (this.getBandageLife() == 0.0F) {
-            var4 -= 35000;
+            var3 -= 35000;
          }
 
          if (this.getScratchTime() > 0.0F) {
-            var4 -= 20000;
+            var3 -= 20000;
          }
 
          if (this.getCutTime() > 0.0F) {
-            var4 -= 25000;
+            var3 -= 25000;
          }
 
          if (this.getDeepWoundTime() > 0.0F) {
-            var4 -= 30000;
+            var3 -= 30000;
          }
 
          if (this.haveGlass()) {
-            var4 -= 24000;
+            var3 -= 24000;
          }
 
          if (this.getBurnTime() > 0.0F) {
-            var4 -= 23000;
+            var3 -= 23000;
             if (this.isNeedBurnWash()) {
-               var4 -= 7000;
+               var3 -= 7000;
             }
          }
 
@@ -257,72 +300,31 @@ public final class BodyPart {
          if (BodyPartType.ToIndex(this.getType()) <= BodyPartType.ToIndex(BodyPartType.Torso_Lower) && this.ParentChar.getClothingItem_Torso() instanceof Clothing) {
             var2 = (Clothing)this.ParentChar.getClothingItem_Torso();
             if (var2.isDirty()) {
-               var4 -= 20000;
+               var3 -= 20000;
             }
 
             if (var2.isBloody()) {
-               var4 -= 24000;
+               var3 -= 24000;
             }
          }
 
          if (BodyPartType.ToIndex(this.getType()) >= BodyPartType.ToIndex(BodyPartType.UpperLeg_L) && BodyPartType.ToIndex(this.getType()) <= BodyPartType.ToIndex(BodyPartType.LowerLeg_R) && this.ParentChar.getClothingItem_Legs() instanceof Clothing) {
             var2 = (Clothing)this.ParentChar.getClothingItem_Legs();
             if (var2.isDirty()) {
-               var4 -= 20000;
+               var3 -= 20000;
             }
 
             if (var2.isBloody()) {
-               var4 -= 24000;
+               var3 -= 24000;
             }
          }
 
-         if (var4 <= 5000) {
-            var4 = 5000;
+         if (var3 <= 5000) {
+            var3 = 5000;
          }
 
-         if (Rand.Next(Rand.AdjustForFramerate(var4)) == 0) {
+         if (Rand.Next(Rand.AdjustForFramerate(var3)) == 0) {
             this.setInfectedWound(true);
-         }
-      } else if (this.isInfectedWound()) {
-         boolean var3 = false;
-         if (this.getAlcoholLevel() > 0.0F) {
-            this.setAlcoholLevel(this.getAlcoholLevel() - 2.0E-4F * GameTime.getInstance().getMultiplier());
-            this.setWoundInfectionLevel(this.getWoundInfectionLevel() - 2.0E-4F * GameTime.getInstance().getMultiplier());
-            if (this.getAlcoholLevel() < 0.0F) {
-               this.setAlcoholLevel(0.0F);
-            }
-
-            var3 = true;
-         }
-
-         if (this.ParentChar.getReduceInfectionPower() > 0.0F) {
-            this.setWoundInfectionLevel(this.getWoundInfectionLevel() - 2.0E-4F * GameTime.getInstance().getMultiplier());
-            this.ParentChar.setReduceInfectionPower(this.ParentChar.getReduceInfectionPower() - 2.0E-4F * GameTime.getInstance().getMultiplier());
-            if (this.ParentChar.getReduceInfectionPower() < 0.0F) {
-               this.ParentChar.setReduceInfectionPower(0.0F);
-            }
-
-            var3 = true;
-         }
-
-         if (this.getGarlicFactor() > 0.0F) {
-            this.setWoundInfectionLevel(this.getWoundInfectionLevel() - 2.0E-4F * GameTime.getInstance().getMultiplier());
-            this.setGarlicFactor(this.getGarlicFactor() - 8.0E-4F * GameTime.getInstance().getMultiplier());
-            var3 = true;
-         }
-
-         if (!var3) {
-            if (this.IsInfected) {
-               this.setWoundInfectionLevel(this.getWoundInfectionLevel() + 2.0E-4F * GameTime.getInstance().getMultiplier());
-            } else if (this.haveGlass()) {
-               this.setWoundInfectionLevel(this.getWoundInfectionLevel() + 1.0E-4F * GameTime.getInstance().getMultiplier());
-            } else {
-               this.setWoundInfectionLevel(this.getWoundInfectionLevel() + 1.0E-5F * GameTime.getInstance().getMultiplier());
-            }
-
-            if (this.getWoundInfectionLevel() > 10.0F) {
-               this.setWoundInfectionLevel(10.0F);
-            }
          }
       }
 

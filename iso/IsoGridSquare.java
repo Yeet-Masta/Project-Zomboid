@@ -2181,13 +2181,13 @@ public final class IsoGridSquare {
 
                      try {
                         var12.load(var1, var2, var3);
-                     } catch (Exception var18) {
+                     } catch (Exception var17) {
                         this.debugPrintGridSquare();
                         if (lastLoaded != null) {
                            lastLoaded.debugPrintGridSquare();
                         }
 
-                        throw new RuntimeException(var18);
+                        throw new RuntimeException(var17);
                      }
 
                      if (var3) {
@@ -2260,13 +2260,13 @@ public final class IsoGridSquare {
 
                   try {
                      var25 = (IsoMovingObject)IsoObject.factoryFromFileInput(this.getCell(), var1);
-                  } catch (Exception var16) {
+                  } catch (Exception var18) {
                      this.debugPrintGridSquare();
                      if (lastLoaded != null) {
                         lastLoaded.debugPrintGridSquare();
                      }
 
-                     throw new RuntimeException(var16);
+                     throw new RuntimeException(var18);
                   }
 
                   if (var25 != null) {
@@ -2275,13 +2275,13 @@ public final class IsoGridSquare {
 
                      try {
                         var25.load(var1, var2, var3);
-                     } catch (Exception var17) {
+                     } catch (Exception var16) {
                         this.debugPrintGridSquare();
                         if (lastLoaded != null) {
                            lastLoaded.debugPrintGridSquare();
                         }
 
-                        throw new RuntimeException(var17);
+                        throw new RuntimeException(var16);
                      }
 
                      this.StaticMovingObjects.add(var25);

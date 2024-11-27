@@ -109,6 +109,7 @@ public class PZArrayUtil {
    }
 
    public static int indexOf(Object[] var0, Predicate var1) {
+      byte var8;
       try {
          for(int var2 = 0; var2 < var0.length; ++var2) {
             Object var3 = var0[var2];
@@ -118,11 +119,12 @@ public class PZArrayUtil {
             }
          }
 
-         byte var8 = -1;
-         return var8;
+         var8 = -1;
       } finally {
          Pool.tryRelease((Object)var1);
       }
+
+      return var8;
    }
 
    public static int indexOf(List var0, Predicate var1) {
@@ -220,26 +222,24 @@ public class PZArrayUtil {
       if (var0 instanceof List) {
          return find((List)var0, var1);
       } else {
-         Object var4;
+         Iterator var2;
          try {
-            Iterator var2 = var0.iterator();
+            var2 = var0.iterator();
 
-            Object var3;
-            do {
-               if (!var2.hasNext()) {
-                  var2 = null;
-                  return var2;
+            while(var2.hasNext()) {
+               Object var3 = var2.next();
+               if (var1.test(var3)) {
+                  Object var4 = var3;
+                  return var4;
                }
+            }
 
-               var3 = var2.next();
-            } while(!var1.test(var3));
-
-            var4 = var3;
+            var2 = null;
          } finally {
             Pool.tryRelease((Object)var1);
          }
 
-         return var4;
+         return var2;
       }
    }
 
@@ -672,15 +672,15 @@ public class PZArrayUtil {
 
    public static void forEach(List var0, Consumer var1) {
       try {
-         if (var0 == null) {
+         if (var0 != null) {
+            int var2 = 0;
+
+            for(int var3 = var0.size(); var2 < var3; ++var2) {
+               Object var4 = var0.get(var2);
+               var1.accept(var4);
+            }
+
             return;
-         }
-
-         int var2 = 0;
-
-         for(int var3 = var0.size(); var2 < var3; ++var2) {
-            Object var4 = var0.get(var2);
-            var1.accept(var4);
          }
       } finally {
          Pool.tryRelease((Object)var1);

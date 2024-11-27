@@ -245,9 +245,9 @@ public final class PlayerDB {
    private boolean loadPlayer(int var1, IsoPlayer var2) {
       PlayerData var3 = this.allocPlayerData();
 
+      boolean var4;
       try {
          var3.m_sqlID = var1;
-         boolean var4;
          if (this.m_store.load(var3)) {
             var2.load(var3.m_byteBuffer, var3.m_WorldVersion);
             if (var3.m_isDead) {
@@ -261,14 +261,14 @@ public final class PlayerDB {
          }
 
          var4 = false;
-         return var4;
       } catch (Exception var8) {
          ExceptionLogger.logException(var8);
+         return false;
       } finally {
          this.releasePlayerData(var3);
       }
 
-      return false;
+      return var4;
    }
 
    public boolean loadLocalPlayer(int var1) {

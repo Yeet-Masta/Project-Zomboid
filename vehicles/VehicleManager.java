@@ -1205,10 +1205,10 @@ public final class VehicleManager {
       int var4;
       BaseVehicle var7;
       short var15;
-      DebugLogStream var10000;
       byte var16;
-      String var10001;
+      DebugLogStream var10000;
       BaseVehicle var17;
+      String var10001;
       String var19;
       BaseVehicle var22;
       byte var23;
